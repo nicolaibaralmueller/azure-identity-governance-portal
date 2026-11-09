@@ -1,0 +1,19 @@
+/* Azure light — default theme. Every colour the portal uses is defined here; a new theme
+   copies this file, changes the values, and registers itself in js/themes.js. */
+[data-theme="azure-light"]{
+  color-scheme:light;
+  --header-bg:#0f6cbd;--header-fg:#ffffff;--header-hover:rgba(255,255,255,.12);--header-search:rgba(255,255,255,.16);
+  --canvas:#f3f2f1;--surface:#ffffff;--surface-alt:#faf9f8;--nav-active:#edebe9;
+  --border:#e1dfdd;--border-strong:#c8c6c4;--border-subtle:#f3f2f1;
+  --text:#323130;--text-2:#605e5c;--text-3:#8a8886;--link:#0f6cbd;
+  --brand:#0f6cbd;--brand-hover:#115ea3;--brand-soft:#ebf3fc;--brand-border:#b4d6fa;--on-brand:#ffffff;
+  --ok:#107c10;--ok-bg:#dff6dd;--ok-border:#9fd89f;
+  --warn:#8a5300;--warn-bg:#fff4ce;--warn-border:#f9d867;--warn-fill:#f7a21b;
+  --danger:#a4262c;--danger-bg:#fde7e9;--danger-border:#f1bbbc;--danger-fill:#d13438;--danger-hover:#8e1f25;
+  --accent2:#5c2e91;--accent2-bg:#efe6f8;--accent2-border:#d4bff0;
+  --neutral-bg:#f3f2f1;--toggle-off:#c8c6c4;--chart-track:#edebe9;
+  --row-hover:#f5f5f5;--row-selected:#ebf3fc;--row-marked:#fdf3f4;--row-marked-hover:#fbe5e7;
+  --tooltip-bg:#323130;--tooltip-fg:#ffffff;--overlay:rgba(0,0,0,.4);--focus:#0f6cbd;
+  --shadow:0 1.6px 3.6px rgba(0,0,0,.13),0 .3px .9px rgba(0,0,0,.11);
+  --shadow-pane:-4px 0 16px rgba(0,0,0,.14);
+}

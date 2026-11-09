@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": {
+      "value": "<App>"
+    },
+    "environment": {
+      "value": "prd"
+    },
+    "appPlanName": {
+      "value": "<AppServicePlanName>"
+    },
+    "storageAccountName": {
+      "value": "<storageaccountname>"
+    },
+    "deployKeyVault": {
+      "value": false
+    },
+    "logAnalyticsWorkspaceId": {
+      "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/<RG>/providers/Microsoft.OperationalInsights/workspaces/<workspace>"
+    },
+    "authClientId": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "authUseManagedIdentity": {
+      "value": true
+    },
+    "authForwardProxy": {
+      "value": true
+    },
+    "portalPublicHostName": {
+      "value": "identity.contoso.com"
+    },
+    "portalFrontDoorId": {
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    "portalAllowedIpRanges": {
+      "value": []
+    },
+    "apiAllowedIpRanges": {
+      "value": ["<IP>/32"]
+    },
+    "scmAllowedServiceTags": {
+      "value": ["AzureCloud"]
+    },
+    "scmAllowedIpRanges": {
+      "value": ["<IP>/32"]
+    },
+    "acsEndpoint": {
+      "value": "https://<endpoint>.<geo>.communication.azure.com"
+    },
+    "mailSenderAddress": {
+      "value": "DoNotReply@contoso.com"
+    },
+    "governanceEscalationTo": {
+      "value": ""
+    },
+    "secretMaxLifetimeDays": {
+      "value": 365
+    },
+    "language": {
+      "value": "en"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Identity Governance: shield with a check, on the portal's brand blue (--brand in azure-light.css).
+       PNG/ICO fallbacks are generated from the same shapes by Tools/New-Favicon.ps1. -->
+  <rect width="64" height="64" rx="14" fill="#0f6cbd"/>
+  <path d="M32 9 L51 15.5 V30 C51 42.5 42.5 51 32 55 C21.5 51 13 42.5 13 30 V15.5 Z" fill="#ffffff"/>
+  <path d="M22.5 32 L29 38.5 L42 25.5" fill="none" stroke="#0f6cbd" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

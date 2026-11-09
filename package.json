@@ -1,0 +1,14 @@
+{
+  "name": "identity-governance-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted portal for governing Microsoft Entra ID app registrations, enterprise apps, managed identities and privileged users.",
+  "license": "MIT",
+  "scripts": {
+    "demo": "node Tools/demo/mock-server.js",
+    "screenshots": "node Tools/demo/take-screenshots.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

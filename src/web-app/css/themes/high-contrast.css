@@ -1,0 +1,18 @@
+/* High contrast. Same token names as azure-light.css; maximum contrast, no shadows. */
+[data-theme="high-contrast"]{
+  color-scheme:dark;
+  --header-bg:#000000;--header-fg:#ffff00;--header-hover:#1a1a1a;--header-search:#000000;
+  --canvas:#000000;--surface:#000000;--surface-alt:#000000;--nav-active:#003a40;
+  --border:#ffffff;--border-strong:#ffffff;--border-subtle:#808080;
+  --text:#ffffff;--text-2:#ffffff;--text-3:#d0d0d0;--link:#ffff00;
+  --brand:#1aebff;--brand-hover:#66f2ff;--brand-soft:#002b30;--brand-border:#1aebff;--on-brand:#000000;
+  --ok:#3ff23f;--ok-bg:#000000;--ok-border:#3ff23f;
+  --warn:#ffff00;--warn-bg:#000000;--warn-border:#ffff00;--warn-fill:#ffff00;
+  --danger:#ff6b6b;--danger-bg:#000000;--danger-border:#ff6b6b;--danger-fill:#ff6b6b;--danger-hover:#ff9b9b;
+  --accent2:#e0a0ff;--accent2-bg:#000000;--accent2-border:#e0a0ff;
+  --neutral-bg:#000000;--toggle-off:#808080;--chart-track:#333333;
+  --row-hover:#1a1a1a;--row-selected:#002b30;--row-marked:#2b0000;--row-marked-hover:#400000;
+  --tooltip-bg:#ffffff;--tooltip-fg:#000000;--overlay:rgba(0,0,0,.75);--focus:#ffff00;
+  --shadow:none;
+  --shadow-pane:none;
+}

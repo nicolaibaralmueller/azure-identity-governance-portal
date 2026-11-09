@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="azure-light" class="i18n-pending">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="app.title">Identity Governance</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0f6cbd">
+<script src="js/themes.js"></script>
+<script src="js/i18n.js"></script>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></symbol>
+  <symbol id="i-app" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></symbol>
+  <symbol id="i-ent" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V4h8v3"/></symbol>
+  <symbol id="i-mi" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7"/><path d="m15 15 2 2 4-4"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="m3 7 4 5 5-7 5 7 4-5-2 12H5z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M16 7l3 3"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></symbol>
+</svg>
+
+<header class="hdr">
+  <button class="hdr-btn nav-toggle" aria-label="Show menu" data-i18n-aria="hdr.showMenu" onclick="document.body.classList.toggle('nav-open')"><svg class="i"><use href="#i-menu"/></svg></button>
+  <div class="hdr-title"><svg class="i"><use href="#i-shield"/></svg><span id="tenantName">Identity Governance</span></div>
+  <label class="hdr-search"><svg class="i"><use href="#i-search"/></svg><input type="search" id="globalSearch" placeholder="Search identities by name, ID, or owner" aria-label="Search identities" data-i18n-ph="hdr.search" data-i18n-aria="hdr.searchAria"></label>
+  <button class="hdr-btn" id="themeBtn" aria-label="Appearance" data-i18n-aria="menu.appearance" aria-expanded="false" onclick="toggleMenu('themeMenu',this)"><svg class="i"><use href="#i-gear"/></svg></button>
+  <button class="hdr-btn" id="userBtn" aria-label="Account" data-i18n-aria="menu.account" aria-expanded="false" onclick="toggleMenu('userMenu',this)"><span class="avatar" id="avatar">?</span></button>
+  <div class="menu" id="themeMenu" role="dialog" aria-label="Appearance" data-i18n-aria="menu.appearance">
+    <h4 data-i18n="menu.appearance">Appearance</h4>
+    <div id="themeList"></div>
+  </div>
+  <div class="menu" id="userMenu" role="dialog" aria-label="Account" data-i18n-aria="menu.account">
+    <div class="menu-name" id="uName"></div>
+    <div class="menu-upn" id="uUpn"></div>
+    <div class="menu-role" id="uRole"></div>
+    <div class="menu-div"></div>
+    <button class="mbtn" onclick="signOut()" data-i18n="menu.signOut">Sign out</button>
+  </div>
+</header>
+
+<div class="blade-hdr">
+  <div class="blade-icon"><svg class="i"><use href="#i-shield"/></svg></div>
+  <div>
+    <h1>Identity Governance <span id="bladeName">| Overview</span></h1>
+    <div class="blade-sub"><span id="tenantSub"></span><span id="dataFreshness"></span></div>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="nav" aria-label="Service menu" data-i18n-aria="nav.serviceMenu">
+    <button class="nav-item admin-only active" data-view="overview" onclick="showView('overview')"><svg class="i"><use href="#i-home"/></svg><span data-i18n="view.overview">Overview</span></button>
+    <div class="nav-sec" data-i18n="nav.identities">Identities</div>
+    <button class="nav-item" data-type="appregistration" onclick="switchTab('appregistration')"><svg class="i"><use href="#i-app"/></svg><span data-i18n="type.appregistration">App registrations</span><span class="cnt" id="tc-appregistration"></span></button>
+    <button class="nav-item" data-type="enterpriseapp" onclick="switchTab('enterpriseapp')"><svg class="i"><use href="#i-ent"/></svg><span data-i18n="type.enterpriseapp">Enterprise applications</span><span class="cnt" id="tc-enterpriseapp"></span></button>
+    <button class="nav-item admin-only" data-type="managedidentity" onclick="switchTab('managedidentity')"><svg class="i"><use href="#i-mi"/></svg><span data-i18n="type.managedidentity">Managed identities</span><span class="cnt" id="tc-managedidentity"></span></button>
+    <button class="nav-item admin-only" data-type="privilegeduser" onclick="switchTab('privilegeduser')"><svg class="i"><use href="#i-crown"/></svg><span data-i18n="type.privilegeduser">Privileged users</span><span class="cnt" id="tc-privilegeduser"></span></button>
+    <div class="nav-sec admin-only" data-i18n="nav.governance">Governance</div>
+    <button class="nav-item admin-only" data-view="pending" onclick="showView('pending')"><svg class="i"><use href="#i-clock"/></svg><span data-i18n="view.pending">Pending actions</span><span class="badge" id="navPending" style="display:none"></span></button>
+    <button class="nav-item admin-only" data-view="consent" onclick="showView('consent')"><svg class="i"><use href="#i-key"/></svg><span data-i18n="view.consent">Consent settings</span></button>
+  </nav>
+
+  <main class="main">
+    <div class="cmd">
+      <button class="cmd-btn" onclick="refreshAll()"><svg class="i"><use href="#i-refresh"/></svg><span data-i18n="cmd.refresh">Refresh</span></button>
+      <button class="cmd-btn list-only" onclick="exportCSV()"><svg class="i"><use href="#i-download"/></svg><span data-i18n="cmd.export">Export to CSV</span></button>
+      <span class="cmd-sep"></span>
+      <a class="cmd-btn" href="https://entra.microsoft.com/" target="_blank" rel="noopener"><svg class="i"><use href="#i-ext"/></svg><span data-i18n="cmd.openEntra">Open Entra admin center</span></a>
+    </div>
+
+    <div class="content" id="content">
+      <div class="banner" id="loadBanner" role="status" aria-live="polite"><svg class="i"><use href="#i-info"/></svg><div class="banner-body" id="loadBannerText"></div></div>
+      <div class="banner admin-only" id="consentBanner">
+        <svg class="i"><use href="#i-warn"/></svg>
+        <div class="banner-body">
+          <div class="banner-title" id="consentBannerTitle"></div>
+          <div id="consentBannerFindings"></div>
+          <div class="consent-banner-link"><a href="#" onclick="showView('consent');return false" data-i18n="banner.viewConsent">View consent settings</a></div>
+        </div>
+        <button class="banner-close" onclick="dismissConsentBanner()" aria-label="Dismiss" data-i18n-aria="btn.dismiss"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+      <div id="errC" style="display:none"></div>
+
+      <!-- ── Overview ── -->
+      <section class="view active" id="v-overview">
+        <div class="essentials">
+          <h3 data-i18n="es.title">Essentials</h3>
+          <dl>
+            <div class="kv"><dt data-i18n="es.tenant">Tenant</dt><dd id="esTenant">&mdash;</dd></div>
+            <div class="kv"><dt data-i18n="es.lastSync">Last sync</dt><dd id="esSync">&mdash;</dd></div>
+            <div class="kv"><dt data-i18n="es.notifications">Notifications</dt><dd id="esNotify">&mdash;</dd></div>
+          </dl>
+          <dl>
+            <div class="kv"><dt data-i18n="es.identities">Identities</dt><dd id="esTotal">&mdash;</dd></div>
+            <div class="kv"><dt data-i18n="es.role">Your role</dt><dd id="esRole">&mdash;</dd></div>
+            <div class="kv"><dt data-i18n="es.consent">Consent posture</dt><dd id="esConsent">&mdash;</dd></div>
+          </dl>
+        </div>
+
+        <div class="tiles">
+          <button class="tile" id="tlScore" onclick="scrollToCard('cardScore')"><div class="lbl" data-i18n="tile.score">Health score</div><div class="val">&mdash;</div><div class="delta" data-i18n="dash.outOf100">out of 100</div></button>
+          <button class="tile" id="tlHigh"><div class="lbl" data-i18n="tile.high">High risk</div><div class="val">&mdash;</div><div class="delta"></div></button>
+          <button class="tile" id="tlExp" onclick="openList('appregistration',{status:'expiring'})"><div class="lbl" data-i18n="tile.expiring">Expired or expiring</div><div class="val">&mdash;</div><div class="delta"></div></button>
+          <button class="tile" id="tlOwner" onclick="openList('appregistration',{status:'no-live-owner'})"><div class="lbl" data-i18n="tile.noOwner">No active owner</div><div class="val">&mdash;</div><div class="delta"></div></button>
+          <button class="tile" id="tlPriv" onclick="switchTab('privilegeduser')"><div class="lbl" data-i18n="tile.priv">Privileged identities</div><div class="val">&mdash;</div><div class="delta"></div></button>
+          <button class="tile" id="tlPend" onclick="showView('pending')"><div class="lbl" data-i18n="tile.pending">Pending actions</div><div class="val">&mdash;</div><div class="delta" data-i18n="dash.awaitingAdmin">awaiting an admin</div></button>
+        </div>
+
+        <div class="cards">
+          <div class="card" id="cardScore">
+            <h3 data-i18n="card.score">Health score</h3>
+            <div class="score">
+              <svg class="ring" id="scoreRing" viewBox="0 0 112 112" role="img" aria-label="Health score" data-i18n-aria="card.score"><circle class="track" cx="56" cy="56" r="46"/><circle class="fill" id="scoreArc" cx="56" cy="56" r="46" stroke-dasharray="0 289"/><text x="56" y="56" id="scoreTxt">&mdash;</text></svg>
+              <div class="score-rows">
+                <div class="score-row"><span class="score-row-label" data-i18n="score.ownership">Ownership</span><div class="score-row-bar"><div class="score-row-fill" id="sp-own-bar" style="width:0%"></div></div><span class="score-row-pct" id="sp-own-pct">&mdash;</span><span class="score-row-weight">30%</span></div>
+                <div class="score-sub" id="sp-own-split"></div>
+                <div class="score-row"><span class="score-row-label" data-i18n="score.cred">Credential hygiene</span><div class="score-row-bar"><div class="score-row-fill" id="sp-cred-bar" style="width:0%"></div></div><span class="score-row-pct" id="sp-cred-pct">&mdash;</span><span class="score-row-weight">30%</span></div>
+                <div class="score-row"><span class="score-row-label" data-i18n="score.ca">CA coverage</span><div class="score-row-bar"><div class="score-row-fill" id="sp-ca-bar" style="width:0%"></div></div><span class="score-row-pct" id="sp-ca-pct">&mdash;</span><span class="score-row-weight">20%</span></div>
+                <div class="score-row"><span class="score-row-label" data-i18n="score.stale">Not stale</span><div class="score-row-bar"><div class="score-row-fill" id="sp-stale-bar" style="width:0%"></div></div><span class="score-row-pct" id="sp-stale-pct">&mdash;</span><span class="score-row-weight">20%</span></div>
+              </div>
+            </div>
+            <div class="card-note" data-i18n="score.note">Weighted average. The weight of each category is shown on the right.</div>
+          </div>
+
+          <div class="card">
+            <h3 data-i18n="card.riskByType">Risk by identity type</h3>
+            <div id="riskByType"><div class="empty" data-i18n="common.loading">Loading&hellip;</div></div>
+            <div class="legend"><span><i class="c-high"></i><span data-i18n="risk.High">High</span></span><span><i class="c-med"></i><span data-i18n="risk.Medium">Medium</span></span><span><i class="c-ok"></i><span data-i18n="risk.Healthy">Healthy</span></span></div>
+          </div>
+
+          <div class="card">
+            <h3><span data-i18n="card.expiry">Credential expiry, next 12 weeks</span> <button onclick="openList('appregistration',{status:'expiring'})" data-i18n="card.viewExpiring">View expiring</button></h3>
+            <div class="cols" id="expiryCols"></div>
+            <div class="col-lbls" id="expiryLbls"></div>
+            <div class="card-note" id="expiryNote"></div>
+          </div>
+
+          <div class="card">
+            <h3 data-i18n="card.reasons">Top risk reasons</h3>
+            <ul class="rlist" id="topReasons"><li class="empty" data-i18n="common.loading">Loading&hellip;</li></ul>
+          </div>
+
+          <div class="card">
+            <h3><span data-i18n="card.pending">Pending actions</span> <button onclick="showView('pending')" data-i18n="card.openQueue">Open queue</button></h3>
+            <ul class="rlist" id="pendingTop"><li class="empty" data-i18n="common.loading">Loading&hellip;</li></ul>
+          </div>
+
+          <div class="card">
+            <h3><span data-i18n="card.advisories">Advisories</span> <button onclick="openList('appregistration',{status:'advisories'})" data-i18n="card.viewAll">View all</button></h3>
+            <ul class="rlist" id="advisoryTop"><li class="empty" data-i18n="common.loading">Loading&hellip;</li></ul>
+            <div class="card-note" data-i18n="card.advNote">Improvement hints. They don't affect risk or the health score.</div>
+          </div>
+
+          <div class="card">
+            <h3><span data-i18n="card.notify">Expiry notifications</span> <button onclick="openList('appregistration',{status:'notify-off'})" data-i18n="card.switchMore">Switch more on</button></h3>
+            <div id="notifyCard"><div class="empty" data-i18n="common.loading">Loading&hellip;</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Identity list ── -->
+      <section class="view" id="v-list">
+        <div class="filters">
+          <label class="sbox"><svg class="i"><use href="#i-search"/></svg><input type="text" id="searchI" placeholder="Filter by name, ID, or owner" oninput="applyFilters()" aria-label="Filter" data-i18n-ph="flt.filter" data-i18n-aria="flt.filterAria"></label>
+          <label class="fpill" id="fgOwner"><span class="op" data-i18n="flt.owner">Owner ==</span><select id="ownerF" onchange="applyFilters()"><option value="all" data-i18n="flt.all">All</option><option value="with-owner" data-i18n="flt.withOwner">With owner</option><option value="no-owner" data-i18n="flt.noOwner">No owner</option></select></label>
+          <label class="fpill"><span class="op" data-i18n="flt.show">Show ==</span><select id="statusF" onchange="applyFilters()"><option value="all" data-i18n="flt.all">All</option></select></label>
+          <label class="fpill"><span class="op" data-i18n="flt.risk">Risk ==</span><select id="riskF" onchange="applyFilters()"><option value="all" data-i18n="flt.all">All</option><option value="High" data-i18n="risk.High">High</option><option value="Medium" data-i18n="risk.Medium">Medium</option><option value="Healthy" data-i18n="risk.Healthy">Healthy</option></select></label>
+          <label class="fpill" id="fgSSO" style="display:none"><span class="op" data-i18n="flt.sso">SSO ==</span><select id="ssoF" onchange="applyFilters()"><option value="all" data-i18n="flt.all">All</option><option value="SAML">SAML</option><option value="OIDC">OIDC</option><option value="OIDC (inferred)" data-i18n="sso.OIDC (inferred)">OIDC (inferred)</option><option value="Password" data-i18n="sso.Password">Password</option><option value="None" data-i18n="sso.None">None</option></select></label>
+          <label class="fpill toggle" id="msFT" style="display:none" title="Hide Microsoft first-party apps" data-i18n-title="flt.hideMsTip"><input type="checkbox" id="msFTC" checked onchange="toggleHideMS()"><span data-i18n="flt.hideMs">Hide Microsoft apps</span></label>
+          <label class="fpill toggle admin-only" id="myAppsT" style="display:none" title="Show only apps where you are an owner" data-i18n-title="flt.myAppsTip"><input type="checkbox" id="myAppsC" onchange="toggleMyApps()"><span data-i18n="flt.myApps">My apps</span></label>
+          <span class="fpill removable" id="reasonP" style="display:none"><span class="op" data-i18n="flt.reason">Risk reason ==</span><b id="reasonV"></b><button class="x" onclick="clearReason()" aria-label="Remove filter" data-i18n-aria="flt.removeFilter"><svg class="i"><use href="#i-x"/></svg></button></span>
+        </div>
+        <div class="bulk-bar admin-only" id="bulkBar">
+          <strong id="bulkCount">0</strong> <span data-i18n="bulk.selected">selected</span>
+          <button class="mbtn mbtn-d" onclick="bulkDelete()" data-i18n="bulk.tag">Tag for deletion</button>
+          <button class="mbtn" onclick="clearSel()" data-i18n="bulk.clear">Clear selection</button>
+        </div>
+        <div class="banner banner-info admin-only" id="pendingBanner"><svg class="i"><use href="#i-info"/></svg><div class="banner-body" id="pendingBannerText"></div></div>
+        <div class="sbar" id="statsBar" style="display:none">
+          <span><span data-i18n="sb.showing">Showing</span> <strong id="visC">0</strong> <span data-i18n="sb.of">of</span> <strong id="totC">0</strong></span>
+          <span class="sb sb-d" id="sHR" style="display:none"><span id="hrC">0</span> <span data-i18n="sb.high">high risk</span></span>
+          <span class="sb sb-w" id="sMR" style="display:none"><span id="mrC">0</span> <span data-i18n="sb.medium">medium risk</span></span>
+          <span class="sb sb-d" id="sNO" style="display:none"><span id="noC">0</span> <span data-i18n="sb.noOwner">no owner</span></span>
+          <span class="sb sb-d" id="sOD" style="display:none"><span id="odC">0</span> <span data-i18n="sb.ownerLeft">owner left</span></span>
+          <span class="sb sb-w" id="sSO" style="display:none"><span id="soC">0</span> <span data-i18n="sb.single">single owner</span></span>
+          <span class="sb sb-d" id="sMD" style="display:none"><span id="mdC">0</span> <span data-i18n="sb.marked">marked</span></span>
+          <span class="sb sb-w" id="sEX" style="display:none"><span id="exC">0</span> <span data-i18n="sb.expiring">expiring</span></span>
+          <span class="sb sb-d" id="sPV" style="display:none"><span id="pvC">0</span> <span data-i18n="sb.priv">privileged</span></span>
+          <span class="sb sb-i" id="sPC" style="display:none"><span id="pcC">0</span> <span data-i18n="sb.pending">pending</span></span>
+          <span class="sb sb-i" id="sMS" style="display:none"><span id="msC">0</span> <span data-i18n="sb.msHidden">Microsoft hidden</span></span>
+          <span class="sb sb-w" id="sST" style="display:none"><span id="stC">0</span> <span data-i18n="sb.stale">stale</span></span>
+          <span class="sb sb-d" id="sCA" style="display:none"><span id="caC">0</span> <span data-i18n="sb.noCa">no CA policy</span></span>
+        </div>
+        <div id="loadC" class="lc"><div class="sp"></div><div data-i18n="list.loading">Loading identities&hellip;</div></div>
+        <div class="tc" id="tblC" style="display:none"><div class="ts"><table><thead id="tHead"></thead><tbody id="tBody"></tbody></table></div></div>
+      </section>
+
+      <!-- ── Pending actions ── -->
+      <section class="view" id="v-pending">
+        <div class="banner banner-info visible"><svg class="i"><use href="#i-info"/></svg><div class="banner-body" data-i18n-html="pend.banner">These actions are recorded in the portal but not yet applied in Entra ID. An administrator applies them with the <code>Tools/Apply-*.ps1</code> scripts.</div></div>
+        <div class="tc"><div class="ts"><table>
+          <thead><tr><th><div class="thc" data-i18n="pend.colIdentity">Identity</div></th><th><div class="thc" data-i18n="pend.colType">Type</div></th><th><div class="thc" data-i18n="pend.colAction">Action</div></th><th><div class="thc" data-i18n="pend.colDetail">Detail</div></th><th><div class="thc" data-i18n="pend.colBy">Requested by</div></th><th><div class="thc" data-i18n="pend.colOn">Requested on</div></th></tr></thead>
+          <tbody id="pendingRows"></tbody>
+        </table></div></div>
+      </section>
+
+      <!-- ── Consent settings ── -->
+      <section class="view" id="v-consent">
+        <div class="cards">
+          <div class="card">
+            <h3><span data-i18n="cons.title">Tenant consent settings</span> <a href="https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ConsentPoliciesMenuBlade/~/UserSettings" target="_blank" rel="noopener" data-i18n="cons.openEntra">Open in Entra</a></h3>
+            <div id="consentRows"><div class="empty" data-i18n="common.loading">Loading&hellip;</div></div>
+          </div>
+          <div class="card">
+            <h3 data-i18n="cons.findings">Findings</h3>
+            <div id="consentFindings"><div class="empty" data-i18n="common.loading">Loading&hellip;</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ── Details pane (first, so action panes open on top of it) ── -->
+<div class="mo" id="dModal" onclick="if(event.target===this)closeDetails()"><div class="mb" role="dialog" aria-labelledby="dName">
+  <div class="mt"><div><div id="dName"></div><div class="mt-sub" id="dType"></div></div><button class="mt-close" onclick="closeDetails()" aria-label="Close" data-i18n-aria="btn.close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="mbd" id="dBody"></div>
+  <div class="ma" id="dActions"></div>
+</div></div>
+
+<!-- ── Confirmation dialog ── -->
+<div class="mo dialog" id="cModal"><div class="mb" role="dialog" aria-labelledby="mTitle">
+  <div class="mt"><span id="mTitle"></span></div>
+  <div class="mbd" id="mBody"></div>
+  <div class="ma"><button class="mbtn mbtn-d" id="mBtn" onclick="confirmAction()" data-i18n="btn.confirm">Confirm</button><button class="mbtn" onclick="closeModal()" data-i18n="btn.cancel">Cancel</button></div>
+</div></div>
+
+<!-- ── Edit owners ── -->
+<div class="mo" id="oModal" onclick="if(event.target===this)closeOM()"><div class="mb" role="dialog" aria-labelledby="oTitle">
+  <div class="mt"><div><div id="oTitle" data-i18n="mod.ownersTitle">Edit owners</div><div class="mt-sub" id="oAppN"></div></div><button class="mt-close" onclick="closeOM()" aria-label="Close" data-i18n-aria="btn.close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="mbd">
+    <div class="ost" data-i18n="mod.currentOwners">Current owners</div><div id="oList"></div>
+    <div class="ost" id="pSec" style="display:none" data-i18n="mod.pendingRequests">Pending requests</div><div id="pList"></div>
+    <div class="ost" data-i18n="mod.addOwner">Add owner</div>
+    <label class="usb"><svg class="i"><use href="#i-search"/></svg><input type="text" id="uSI" placeholder="Search Entra ID users" oninput="debUS()" aria-label="Search users" data-i18n-ph="mod.searchUsers" data-i18n-aria="mod.searchUsersAria"></label>
+    <div id="uSR"></div>
+  </div>
+  <div class="ma"><button class="mbtn" onclick="closeOM()" data-i18n="btn.close">Close</button></div>
+</div></div>
+
+<!-- ── Describe application ── -->
+<div class="mo" id="ctxModal" onclick="if(event.target===this)closeCtx()"><div class="mb" role="dialog" aria-labelledby="ctxTitle">
+  <div class="mt"><div><div id="ctxTitle" data-i18n="mod.ctxTitle">Describe this application</div><div class="mt-sub" id="ctxAppN"></div></div><button class="mt-close" onclick="closeCtx()" aria-label="Close" data-i18n-aria="btn.close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="mbd">
+    <p class="d-text" data-i18n="mod.ctxIntro">Optional, and there's nothing to keep up to date. This is what only you, as owner, know about the app. It appears in the inventory and the CSV export so coordinators can plan around it.</p>
+    <label class="field-lbl" for="ctxPurpose" data-i18n="mod.purpose">Purpose</label>
+    <textarea class="field" id="ctxPurpose" rows="4" maxlength="1000" placeholder="What does this app do, and what breaks if it stops?" data-i18n-ph="mod.purposePh"></textarea>
+    <label class="field-lbl" for="ctxSystem" data-i18n="mod.system">System / service</label>
+    <input class="field" type="text" id="ctxSystem" maxlength="200" placeholder="Payroll" data-i18n-ph="mod.systemPh">
+    <div class="field-row">
+      <div><label class="field-lbl" for="ctxEnv" data-i18n="mod.environment">Environment</label><select class="field" id="ctxEnv"><option value="">&mdash;</option><option>PRD</option><option>TST</option><option>DEV</option><option value="Shared" data-i18n="env.Shared">Shared</option></select></div>
+      <div><label class="field-lbl" for="ctxCrit" data-i18n="mod.criticality">Criticality</label><select class="field" id="ctxCrit"><option value="">&mdash;</option><option value="Business critical" data-i18n="crit.Business critical">Business critical</option><option value="Important" data-i18n="crit.Important">Important</option><option value="Low impact" data-i18n="crit.Low impact">Low impact</option></select></div>
+    </div>
+    <div class="card-note" id="ctxMeta"></div>
+  </div>
+  <div class="ma"><button class="mbtn mbtn-p" id="ctxBtn" onclick="saveCtx()" data-i18n="btn.save">Save</button><button class="mbtn" onclick="closeCtx()" data-i18n="btn.cancel">Cancel</button></div>
+</div></div>
+
+<!-- ── Request rename ── -->
+<div class="mo" id="rnModal" onclick="if(event.target===this)closeRnModal()"><div class="mb" role="dialog" aria-labelledby="rnTitle">
+  <div class="mt"><div><div id="rnTitle" data-i18n="mod.renameTitle">Request rename</div><div class="mt-sub" id="rnCurrent"></div></div><button class="mt-close" onclick="closeRnModal()" aria-label="Close" data-i18n-aria="btn.close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="mbd">
+    <strong data-i18n="mod.namingStd">Naming standard</strong>
+    <div class="std-box" data-i18n-html="mod.namingBox">
+      <strong>[Organization.System] - [Purpose] - [Environment]</strong><br>
+      Internal: <code>Contoso.Finance - Invoice Integration - PRD</code><br>
+      External: <code>Fabrikam.Payroll - Data Feed - PRD</code><br>
+      Platform: <code>Contoso.Platform - Image Builder - PRD</code><br>
+      Environment suffix: <code>TST</code>, <code>PRD</code>, <code>DEV</code> (only if environment-specific)
+    </div>
+    <label class="field-lbl" for="rnInput" data-i18n="mod.proposedName">Proposed name</label>
+    <input class="field" type="text" id="rnInput" placeholder="Contoso.Platform - Identity Governance - PRD">
+  </div>
+  <div class="ma"><button class="mbtn mbtn-p" id="rnBtn" onclick="submitRename()" data-i18n="btn.submitRequest">Submit request</button><button class="mbtn" onclick="closeRnModal()" data-i18n="btn.cancel">Cancel</button></div>
+</div></div>
+
+<script src="js/core.js"></script>
+<script src="js/table.js"></script>
+<script src="js/overview.js"></script>
+<script src="js/actions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

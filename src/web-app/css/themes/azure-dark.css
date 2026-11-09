@@ -1,0 +1,18 @@
+/* Azure dark. Same token names as azure-light.css, dark values. */
+[data-theme="azure-dark"]{
+  color-scheme:dark;
+  --header-bg:#1b1a19;--header-fg:#ffffff;--header-hover:rgba(255,255,255,.1);--header-search:rgba(255,255,255,.1);
+  --canvas:#11100f;--surface:#1b1a19;--surface-alt:#252423;--nav-active:#323130;
+  --border:#3b3a39;--border-strong:#605e5c;--border-subtle:#292827;
+  --text:#f3f2f1;--text-2:#c8c6c4;--text-3:#979593;--link:#479ef5;
+  --brand:#479ef5;--brand-hover:#62abf5;--brand-soft:#0e2a47;--brand-border:#1f4f80;--on-brand:#0b0b0b;
+  --ok:#54b054;--ok-bg:#0d2e0d;--ok-border:#2a6a2a;
+  --warn:#fce100;--warn-bg:#3d3200;--warn-border:#6e5a00;--warn-fill:#f7a21b;
+  --danger:#f1707b;--danger-bg:#3f1011;--danger-border:#7a2a2e;--danger-fill:#e9636b;--danger-hover:#ff8a93;
+  --accent2:#b696e3;--accent2-bg:#2e1f45;--accent2-border:#563b80;
+  --neutral-bg:#292827;--toggle-off:#605e5c;--chart-track:#323130;
+  --row-hover:#252423;--row-selected:#0e2a47;--row-marked:#2b1416;--row-marked-hover:#3a1a1d;
+  --tooltip-bg:#f3f2f1;--tooltip-fg:#1b1a19;--overlay:rgba(0,0,0,.6);--focus:#479ef5;
+  --shadow:0 1.6px 3.6px rgba(0,0,0,.45);
+  --shadow-pane:-4px 0 16px rgba(0,0,0,.5);
+}
