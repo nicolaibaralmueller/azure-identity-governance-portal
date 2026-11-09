@@ -40,7 +40,7 @@ Granted to the Function App identity by the `Setup/` scripts (the deploying prin
 | Storage Table Data Contributor | Storage account | Read/write the portal tables |
 | Monitoring Metrics Publisher | Application Insights | Entra-authenticated telemetry ingestion (once `disableAppInsightsLocalAuth` is on) |
 
-**Azure Communication Services** (`Assign-CommunicationServicesRole.ps1`): a mail-sender role you choose (`-RoleName`, e.g. a narrow custom role) on the Communication Services resource, to send notification mail without a key.
+**Azure Communication Services** (`Assign-CommunicationServicesRole.ps1`, only when mail is on): an existing role you name with `-RoleName` on your Communication Services resource, so the identity can send mail without a key. The resource, its email domain and the role are prerequisites you create yourself; nothing in this repository builds them. Recommended: a custom role with only `Microsoft.Communication/CommunicationServices/Read`, `Microsoft.Communication/CommunicationServices/Write` and `Microsoft.Communication/EmailServices/write` (see [setup-guide.md](setup-guide.md#email-notifications-optional)).
 
 **Microsoft Graph application roles** (`Configure-GraphPermissions.ps1`):
 

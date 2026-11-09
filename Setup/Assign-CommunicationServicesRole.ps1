@@ -13,10 +13,11 @@
     on the Communication Services resource. The resource's endpoint and the sender address are
     set in the parameter file (acsEndpoint, mailSenderAddress).
 
-    Pick a narrow role, e.g. a custom role with only CommunicationServices/Read,
-    CommunicationServices/Write and EmailServices/read. If sends fail with 403, use a role that
-    also has EmailServices/write, which matches the permissions Microsoft documents
+    Pick a narrow role: a custom role with only Microsoft.Communication/CommunicationServices/Read,
+    Microsoft.Communication/CommunicationServices/Write and Microsoft.Communication/EmailServices/write,
+    the permissions Microsoft documents
     (https://learn.microsoft.com/azure/communication-services/quickstarts/email/send-email-smtp/smtp-authentication#assign-a-role-to-the-microsoft-entra-application).
+    You create the role (and the Communication Services resource) yourself; see docs/setup-guide.md.
     The broad built-in 'Communication and Email Service Owner' also works but grants far more.
     The script never creates a role; it stops if the role doesn't exist.
 

@@ -39,6 +39,7 @@ The browser loads the static portal, then calls the API **directly** with a toke
 | **App Service plan** (shared) | One **B2 Linux** plan hosts *both* apps, with **Always On**. |
 | **Storage Account** | Table storage — the identity cache plus governance state, requests, tenant config, and audit log. |
 | **Application Insights** | Telemetry, linked to a central Log Analytics workspace (or a dedicated one). Local (key) auth can optionally be disabled so the Function App ingests via its managed identity (see [security.md](security.md#telemetry-ingestion-application-insights)). |
+| **Azure Communication Services** (optional, not deployed) | Sends the notification mail. An existing Communication Services resource with a connected email domain, which you provide; the Function App uses it with its managed identity and a role you assign (see [setup-guide.md](setup-guide.md#email-notifications-optional)). |
 | **Key Vault** (optional, off by default) | Only for application secrets added by hand (`deployKeyVault`). The solution needs none: mail goes through Azure Communication Services and EasyAuth can use a federated credential, both with managed identities. |
 
 Both apps reach Microsoft Graph and Storage **outbound** using their managed identities — no app secrets for data access. The only hand-managed credential is the EasyAuth client secret used for user sign-in, and even that can be replaced by a managed identity (`authUseManagedIdentity`, see [security.md](security.md#the-easyauth-client-secret)).

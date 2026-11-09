@@ -169,7 +169,45 @@ The exact roles granted are listed in [security.md](security.md#managed-identity
 
 The grid reads a cache populated by the timers (`SyncIdentityCache-Timer` every 30 min, `SyncPrivilegedUsers-Timer` daily). On a fresh deploy it's empty until the first run — trigger the timers from the Azure portal (Function App → the timer → **Code + Test → Test/Run**) or wait for the schedule.
 
-**(Optional) Email notifications:** mail goes through Azure Communication Services (ACS) with the Function App's managed identity — no key or secret. Set `"acsEndpoint"` (e.g. `https://<acs-name>.<geo>.communication.azure.com`) and `"mailSenderAddress"` (a MailFrom address on a domain connected to that resource) in the parameter file, redeploy, then grant the identity a mail-sender role on the ACS resource with `Setup/Assign-CommunicationServicesRole.ps1` (Owner/UAA on the ACS resource). This enables both `SendExpiryNotifications-Timer` (daily) and `SendOwnerDigest-Timer` (1st of the month); both exit immediately while either value is empty.
+### Email notifications (optional)
+
+Mail is sent through **Azure Communication Services (ACS)** with the Function App's managed identity — no key or secret. **Nothing in this repository creates the mail resources or the role.** `main.bicep` and the `Setup/` scripts only point at what you already have and assign an existing role to the identity.
+
+**You need, before you turn mail on:**
+
+| Requirement | Notes |
+|---|---|
+| An **Email Communication Services** resource with a connected domain | An Azure-managed domain or your own verified domain (SPF/DKIM). |
+| A **Communication Services** resource with that domain connected | Its endpoint goes in `acsEndpoint`, e.g. `https://<acs-name>.<geo>.communication.azure.com`. It may live in another resource group or subscription. |
+| A **MailFrom address** on the connected domain | Goes in `mailSenderAddress`, e.g. `DoNotReply@contoso.com`. The display name is set on the sender username in the email domain. |
+| A **role** the Function App identity can be given on the Communication Services resource | A custom role with only the permissions below is recommended. |
+| Someone with **Owner** or **User Access Administrator** on the Communication Services resource | To run the role assignment. |
+
+**Custom role.** Create it yourself (Azure portal → the Communication Services resource, its resource group or subscription → **Access control (IAM)** → **Roles** → clone **Reader** or start from scratch). It needs exactly these actions, as [documented by Microsoft](https://learn.microsoft.com/azure/communication-services/quickstarts/email/send-email-smtp/smtp-authentication#assign-a-role-to-the-microsoft-entra-application):
+
+| Action | Allows |
+|---|---|
+| `Microsoft.Communication/CommunicationServices/Read` | Reading the Communication Services resource |
+| `Microsoft.Communication/CommunicationServices/Write` | Listed by Microsoft as required for sending with Entra ID (token) authentication |
+| `Microsoft.Communication/EmailServices/write` | Sending mail through the email service connected to the resource |
+
+The role grants no access to keys (`ListKeys`), domains, DNS verification or deletion, and no data actions. The broad built-in **Communication and Email Service Owner** also works, but grants every Communication and Email operation.
+
+**Then:**
+
+1. Set `acsEndpoint` and `mailSenderAddress` in the parameter file and run `deploy.ps1`.
+2. Assign the role to the Function App identity on the Communication Services resource:
+
+   ```powershell
+   .\Setup\Assign-CommunicationServicesRole.ps1 -ResourceGroupName <RG> -FunctionAppName <FunctionAppName> `
+       -CommunicationServiceResourceId /subscriptions/<Subscription>/resourceGroups/<RG>/providers/Microsoft.Communication/communicationServices/<acs-name> `
+       -RoleName "<your custom role name>"
+   ```
+
+   The script only assigns an existing role; it stops if the role doesn't exist. Allow a few minutes for the assignment to take effect, then restart the Function App.
+3. Test: `Tools/New-TestExpiryApp.ps1` creates a throwaway app with expiring secrets (see [Tools/README.md](../Tools/README.md#new-testexpiryappps1)).
+
+This enables both `SendExpiryNotifications-Timer` (daily) and `SendOwnerDigest-Timer` (1st of the month); both exit immediately while `acsEndpoint` or `mailSenderAddress` is empty.
 
 Two related parameters are worth setting at the same time:
 
