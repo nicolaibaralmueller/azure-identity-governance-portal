@@ -370,7 +370,7 @@ var LANGS = {
     'mod.searchUsers': 'Search Entra ID users',
     'mod.searchUsersAria': 'Search users',
     'mod.ctxTitle': 'Describe this application',
-    'mod.ctxIntro': 'Optional, and there\'s nothing to keep up to date. This is what only you, as owner, know about the app. It appears in the inventory and the CSV export so coordinators can plan around it.',
+    'mod.ctxIntro': 'Optional, and there\'s nothing to keep up to date. This is what only you, as owner, know about the app. It appears in the inventory and the CSV export so owners can plan around it.',
     'mod.purpose': 'Purpose',
     'mod.purposePh': 'What does this app do, and what breaks if it stops?',
     'mod.system': 'System / service',

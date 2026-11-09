@@ -142,7 +142,7 @@ foreach ($entity in $allCacheEntities) {
     } else { @() }
 
     # Disabled owners are dropped: mailing a departed employee is how an expiry goes unseen.
-    # An app whose owners have all left still escalates, just straight to the coordinator.
+    # An app whose owners have all left still escalates, just straight to the owner.
     $ownerUpns = @($owners | Where-Object { $_.UserPrincipalName -and $_.Enabled -ne $false } | ForEach-Object { $_.UserPrincipalName })
     if ($ownerUpns.Count -eq 0 -and $escalationTo.Count -eq 0) {
         Write-Host "No active owner and no escalation address for '$($entity.DisplayName)' — nothing to notify"

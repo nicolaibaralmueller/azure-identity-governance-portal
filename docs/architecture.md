@@ -86,7 +86,7 @@ This split is the core performance decision: the expensive work (Graph fetches, 
 
 ### One switch governs all mail
 
-**`NotifyOnExpiry` on the identity is the single gate for every mail the portal sends** — warnings, post-expiry escalation, renewal confirmations, and the monthly digest alike. An identity with notifications off produces no mail of any kind, and never appears in anyone's digest. There is no separate digest subscription to discover or maintain: an owner who wants silence switches the toggle off, and a coordinator can see exactly who is covered from the toggle column.
+**`NotifyOnExpiry` on the identity is the single gate for every mail the portal sends** — warnings, post-expiry escalation, renewal confirmations, and the monthly digest alike. An identity with notifications off produces no mail of any kind, and never appears in anyone's digest. There is no separate digest subscription to discover or maintain: an owner who wants silence switches the toggle off, and a owner can see exactly who is covered from the toggle column.
 
 The corollary is worth stating plainly: **an app with notifications off gets no escalation either**, even when its credential has expired and every owner has left. The portal's *"Notifications off (eligible)"* filter lists the apps in that state — apps that hold credentials and have an owner but no notifications — and is the right thing to sweep before a rollout.
 

@@ -63,7 +63,7 @@
     'mail.lead.renewed'         = 'The credential below has been replaced. Nothing further is required &mdash; this app is covered again{0}.'
     'mail.lead.renewedUntil'    = ' until <strong>{0}</strong>'
     'mail.lead.expiredOrphaned' = 'The credential below <strong>has already expired</strong> and this application has <strong>no active owner</strong> &mdash; every listed owner account is disabled. Anything depending on it is likely failing now. Please assign a new owner and renew.'
-    'mail.lead.expired'         = 'The credential below <strong>has already expired</strong>. Anything depending on it is likely failing now. This notice has also been sent to the identity governance coordinator.'
+    'mail.lead.expired'         = 'The credential below <strong>has already expired</strong>. Anything depending on it is likely failing now. This notice has also been sent to the identity governance owner.'
     'mail.lead.warning.one'     = 'The following credential is expiring and requires renewal. Please rotate or renew before the expiry date to avoid service disruption.'
     'mail.lead.warning.other'   = 'The following credentials are expiring and require renewal. Please rotate or renew before the expiry date to avoid service disruption.'
     'mail.fed'                  = '<strong>Before you renew:</strong> this application already has <strong>federated credentials</strong> configured. If the workload using this secret runs in GitHub Actions, Azure DevOps or AKS, it can authenticate without a secret at all &mdash; in which case the right action is to <strong>delete</strong> this credential rather than renew it.'

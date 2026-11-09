@@ -13,7 +13,7 @@ It runs entirely inside your own Azure subscription, reads from Microsoft Graph 
 - **Tenant health score** — four weighted governance categories (ownership 30%, credential hygiene 30%, CA coverage 20%, staleness 20%) summarised on a dashboard.
 - **Consent posture** — user-consent and admin-consent-request settings at a glance.
 - **Governance actions** — tag for deletion, request renames and owner changes, and opt into credential-expiry notifications that link straight to the renewal page.
-- **A closed notification loop** — warnings at 30/14/7/1 days, escalation to a coordinator once a credential has actually expired, and a confirmation mail when it's renewed so owners know the loop closed.
+- **A closed notification loop** — warnings at 30/14/7/1 days, escalation to a owner once a credential has actually expired, and a confirmation mail when it's renewed so owners know the loop closed.
 - **Monthly owner digest** — one mail per owner covering only what needs attention. No attestation, no due dates, and no mail at all in a month where their apps are fine.
 - **One switch for all of it** — the per-app notification toggle gates *every* mail the portal sends, digest included. Off means silent.
 - **Owner-supplied context** — purpose, system, environment and criticality, filled in by the person who actually knows. Optional, never nags, and included in the export.
@@ -99,6 +99,14 @@ Full instructions: **[docs/setup-guide.md](docs/setup-guide.md)**.
 | `src/web-app/` | The static portal (no build step) |
 | `docs/` | Setup guide, architecture, security model and screenshots |
 | `package.json` | `npm run demo` / `npm run screenshots` for the local demo (no dependencies) |
+
+## How this was built
+
+The architecture and design were provided by the maintainer. The implementation was developed with
+[Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant, working to that
+design. Much of the code, tests and documentation was written with AI assistance. The offline tests and the deploy gate (`deploy.ps1` runs them before
+anything is deployed) apply to all of it. Review it as you would any third-party code before
+running it in your tenant.
 
 ## Contributing, security, and license
 

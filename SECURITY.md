@@ -11,7 +11,7 @@ versions are not maintained.
 shared channel.**
 
 Report them privately through GitHub's **Report a vulnerability** button on the
-repository's **Security** tab, or contact the maintainer at `nbm@profmail.dk`.
+repository's **Security** tab, or contact the maintainer at `33453919+nicolaibaralmueller@users.noreply.github.com`.
 
 Please include:
 

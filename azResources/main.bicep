@@ -122,7 +122,7 @@ e.g. "DoNotReply@contoso.com". The display name is configured on the sender in t
 param mailSenderAddress string = ''
 
 @description('''Optional. Mailbox(es) copied on post-expiry escalations, semicolon or comma separated —
-typically the identity governance coordinator or a team distribution list. This is also the ONLY
+typically the identity governance owner or a team distribution list. This is also the ONLY
 recipient when an app with an expired credential has no active owner left to tell, so leaving it
 empty means orphaned apps expire silently.''')
 param governanceEscalationTo string = ''
